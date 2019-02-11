@@ -100,7 +100,7 @@ const updateMedia = (req, res) => {
             VideoTotalBitRate: req.body.VideoTotalBitRate  
         }
 
-        DAL.updateMedia(mediaID, updatedMedia, req, res);
+        DAL.updateMediaByID(mediaID, updatedMedia, req, res);
 
     } else {
         sendJSONRepsonse (res, 400, {
@@ -109,11 +109,23 @@ const updateMedia = (req, res) => {
     }
 };
 
+// DELETE media by id 
+const deleteMediaByID = (req, res) => {
+
+};
+
+// DELETE specific media version
+const deleteSpecificMediaVersion = (req, res) => {
+
+};
+
 module.exports = {
     addNewMedia,
     getAllMediaRecords,
     getAllMediaVersionsByID,
     getLatestMediaVersionByID,
     getSpecificMediaVersion,
-    updateMedia
+    updateMedia,
+    deleteMediaByID,
+    deleteSpecificMediaVersion
 };

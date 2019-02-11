@@ -18,5 +18,7 @@ router.get('/media/:mediaid', mediaController.getAllMediaVersionsByID);
 router.get('/media/:mediaid/version', mediaController.getLatestMediaVersionByID);
 router.get('/media/:mediaid/version/:versionnumber', mediaController.getSpecificMediaVersion);
 router.put('/media/:mediaid', mediaController.updateMedia);
+router.delete('/media/:mediaid', mediaController.deleteMediaByID);
+router.delete('/media/:mediaid/version/versionnumber', mediaController.deleteSpecificMediaVersion);
 
 module.exports = router;

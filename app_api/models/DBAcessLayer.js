@@ -88,8 +88,6 @@ const getAllMediaRecords = (req, res) => {
 
 // READ all media versions for specific Media
 const getAllMediaVersionsByID = (mediaID, req, res) => {
-    console.log(`mediaID: ${mediaID}`);
-
     MEDIA
     .findById(mediaID)
     .exec((err, media) => {
@@ -157,8 +155,8 @@ const getSpecificMediaVersion = (mediaID, versionNumber, req, res) => {
     
 };
 
-// UPDATE Media Record
-const updateMedia = (mediaID, newMedia, req, res) => {
+// UPDATE Media Record (Create a new version)
+const updateMediaByID = (mediaID, newMedia, req, res) => {
     MEDIA
     .findById(mediaID)
     .slice('mediaData', -1)
@@ -193,7 +191,17 @@ const updateMedia = (mediaID, newMedia, req, res) => {
             }
         }); 
     });
-}
+};
+
+// DELETE Media Record
+const deleteMediaByID = (mediaID, req, res) => {
+
+};
+
+// DELETE specific version of media record
+const deleteSpecificMediaVersion = (mediaID, versionNUmber, req, res) => {
+
+};
 
 module.exports = {
     addUser,
@@ -203,5 +211,7 @@ module.exports = {
     getAllMediaVersionsByID,
     getMostRecentMediaVersion,
     getSpecificMediaVersion,
-    updateMedia
+    updateMediaByID,
+    deleteMediaByID,
+    deleteSpecificMediaVersion
 };
