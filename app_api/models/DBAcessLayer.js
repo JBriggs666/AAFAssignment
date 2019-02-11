@@ -65,8 +65,51 @@ const addMedia = (newMedia, req, res) => {
     })
 };
 
-// READ most recent Media Record
-const getMedia = (mediaID, req, res) => {
+// READ All Media * return only latest version of each *
+const getAllMediaRecords = (req, res) => {
+    MEDIA
+    .find()
+    .slice('mediaData', -1)
+    .exec((err, media) => {
+        if (!media) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Media found"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        sendJSONResponse(res, 200, media);
+
+    });
+};
+
+// READ all media versions for specific Media
+const getAllMediaVersionsByID = (mediaID, req, res) => {
+    console.log(`mediaID: ${mediaID}`);
+
+    MEDIA
+    .findById(mediaID)
+    .exec((err, media) => {
+        if (!media) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Media found with that ID"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        sendJSONResponse(res, 200, media);
+
+    });
+};
+
+// READ most recent Media Record Version
+const getMostRecentMediaVersion = (mediaID, req, res) => {
     MEDIA
     .findById(mediaID)
     .slice('mediaData', -1)
@@ -86,11 +129,11 @@ const getMedia = (mediaID, req, res) => {
     });
 }
 
-// UPDATE Media Record
-const updateMedia = (mediaID, newMedia, req, res) => {
+// READ specific Media Record Version
+const getSpecificMediaVersion = (mediaID, versionNumber, req, res) => {
     MEDIA
     .findById(mediaID)
-    .select('mediaData')
+    .select({ mediaData: { $elemMatch: { versionID: versionNumber } } })
     .exec((err, media) => {
         if (!media) {
             sendJSONResponse(res, 404, {
@@ -101,6 +144,45 @@ const updateMedia = (mediaID, newMedia, req, res) => {
             sendJSONResponse(res, 404, err);
             return;
         }
+
+        // Check that query does not return empty object
+        if (media.mediaData && media.mediaData.length > 0) {
+            sendJSONResponse(res, 200, media); 
+        } else {
+            sendJSONResponse(res, 404, {
+                "message" : "No version found with that version number"
+            });
+        }   
+    });
+    
+};
+
+// UPDATE Media Record
+const updateMedia = (mediaID, newMedia, req, res) => {
+    MEDIA
+    .findById(mediaID)
+    .slice('mediaData', -1)
+    .exec((err, media) => {
+        if (!media) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Media found with that ID"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        // Get data from the last version of the document so that the version number can be incremented
+        let lastMedia = media.mediaData[0];
+
+        let lastVersionID = parseInt(lastMedia.versionID);
+
+        console.log(`last version: ${lastVersionID}`);
+
+        newMedia.versionID = lastVersionID + 1;
+
+        console.log(newMedia);
 
         media.mediaData.push(newMedia);
         media.save((err, media) => {
@@ -117,6 +199,9 @@ module.exports = {
     addUser,
     loginUser,
     addMedia,
-    getMedia,
+    getAllMediaRecords,
+    getAllMediaVersionsByID,
+    getMostRecentMediaVersion,
+    getSpecificMediaVersion,
     updateMedia
 };

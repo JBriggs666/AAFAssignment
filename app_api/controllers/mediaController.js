@@ -32,15 +32,49 @@ const addNewMedia = (req, res) => {
     }
 };
 
-// READ most recent media version
-const getMediaByID = (req, res) => {
+// READ All media in database
+const getAllMediaRecords = (req, res) => {
+    DAL.getAllMediaRecords(req, res);
+};
+
+// READ all media versions for specific Media
+const getAllMediaVersionsByID = (req, res) => {
     if (req.params && req.params.mediaid) {
         let mediaID = req.params.mediaid;
 
-        DAL.getMedia(mediaID, req, res);
+        DAL.getAllMediaVersionsByID(mediaID, req, res);
+
     } else {
         sendJSONRepsonse(res, 400, {
             "message" : "media id required to locate records"
+        });
+    }
+};
+
+// READ most recent media version
+const getLatestMediaVersionByID = (req, res) => {
+    if (req.params && req.params.mediaid) {
+        let mediaID = req.params.mediaid;
+
+        DAL.getMostRecentMediaVersion(mediaID, req, res);
+    } else {
+        sendJSONRepsonse(res, 400, {
+            "message" : "media id required to locate records"
+        });
+    }
+};
+
+// READ specific Media Record Version
+const getSpecificMediaVersion = (req, res) => {
+    if (req.params && req.params.mediaid && req.params.versionnumber) {
+        let mediaID = req.params.mediaid;
+        let versionNumber = req.params.versionnumber;
+
+        DAL.getSpecificMediaVersion(mediaID, versionNumber, req, res);
+
+    } else {
+        sendJSONRepsonse(res, 400, {
+            "message" : "media id and version number required to locate records"
         });
     }
 };
@@ -77,6 +111,9 @@ const updateMedia = (req, res) => {
 
 module.exports = {
     addNewMedia,
-    getMediaByID,
+    getAllMediaRecords,
+    getAllMediaVersionsByID,
+    getLatestMediaVersionByID,
+    getSpecificMediaVersion,
     updateMedia
 };
