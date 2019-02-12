@@ -195,12 +195,43 @@ const updateMediaByID = (mediaID, newMedia, req, res) => {
 
 // DELETE Media Record
 const deleteMediaByID = (mediaID, req, res) => {
+    MEDIA
+    .findByIdAndRemove(mediaID)
+    .exec((err, media) => {
+        if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
 
+        sendJSONResponse(res, 204, {
+            "message" : `Media with ID: ${mediaID} successfully deleted`
+        });
+    });
 };
 
 // DELETE specific version of media record
-const deleteSpecificMediaVersion = (mediaID, versionNUmber, req, res) => {
+const deleteSpecificMediaVersion = (mediaID, versionNumber, req, res) => {
+    MEDIA
+    .update(
+        { _id: mediaID},
+        { $pull: { mediaData: { versionID: versionNumber } } }
+    )
+    .exec((err, media) => {
+        if (!media) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Media found with that ID"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
 
+        sendJSONResponse(res, 201, {
+            "message" : `Media with ID: ${mediaID} and Version Number: ${versionNumber} successfully deleted`
+        });
+
+    });
 };
 
 module.exports = {

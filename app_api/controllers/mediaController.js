@@ -81,7 +81,7 @@ const getSpecificMediaVersion = (req, res) => {
 
 // UPDATE media with new version
 const updateMedia = (req, res) => {
-    if (req.body && req.params.mediaid) {
+    if (req.body.FileName && req.params.mediaid) {
         let mediaID = req.params.mediaid;
         let updatedMedia = {
             FileName: req.body.FileName,
@@ -111,11 +111,31 @@ const updateMedia = (req, res) => {
 
 // DELETE media by id 
 const deleteMediaByID = (req, res) => {
+    if (req.params && req.params.mediaid) {
+        let mediaID = req.params.mediaid;
 
+        DAL.deleteMediaByID(mediaID, req, res);
+
+    } else {
+        sendJSONRepsonse(res, 400, {
+            "message" : "media id required to locate records for deletion"
+        });
+    }
 };
 
 // DELETE specific media version
 const deleteSpecificMediaVersion = (req, res) => {
+    if (req.params && req.params.mediaid && req.params.versionnumber) {
+        let mediaID = req.params.mediaid;
+        let versionNumber = req.params.versionnumber;
+
+        DAL.deleteSpecificMediaVersion(mediaID, versionNumber, req, res);
+        
+    } else {
+        sendJSONRepsonse(res, 400, {
+            "message" : "media id and version number required to locate records for deletion"
+        });
+    }
 
 };
 
