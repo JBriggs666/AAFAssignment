@@ -7,18 +7,20 @@ const auth = jwt({
 });
 
 const userController = require('../controllers/userController');
-const mediaController = require('../controllers/mediaController');
+const videoController = require('../controllers/videoController');
 
+// User routes
 router.post('/users', userController.addNewUser);
 router.post('/users/login', userController.login);
 
-router.post('/media', mediaController.addNewMedia);
-router.get('/media', mediaController.getAllMediaRecords);
-router.get('/media/:mediaid', mediaController.getAllMediaVersionsByID);
-router.get('/media/:mediaid/version', mediaController.getLatestMediaVersionByID);
-router.get('/media/:mediaid/version/:versionnumber', mediaController.getSpecificMediaVersion);
-router.put('/media/:mediaid', mediaController.updateMedia);
-router.delete('/media/:mediaid', mediaController.deleteMediaByID);
-router.delete('/media/:mediaid/version/:versionnumber', mediaController.deleteSpecificMediaVersion);
+// Video routes
+router.post('/media/video', videoController.addNewVideo);
+router.get('/media/video', videoController.getAllVideoRecords);
+router.get('/media/video/:videoid', videoController.getAllVideoVersionsByID);
+router.get('/media/video/:videoid/version', videoController.getLatestVideoVersionByID);
+router.get('/media/video/:videoid/version/:versionnumber', videoController.getSpecificVideoVersion);
+router.put('/media/video/:videoid', videoController.updateVideo);
+router.delete('/media/video/:videoid', videoController.deleteVideoByID);
+router.delete('/media/video/:videoid/version/:versionnumber', videoController.deleteSpecificVideoVersion);
 
 module.exports = router;

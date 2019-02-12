@@ -1,7 +1,7 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
 const USER = mongoose.model('user');
-const MEDIA = mongoose.model('media');
+const VIDEO = mongoose.model('video');
 
 
 const sendJSONResponse = (res, status, content) => {
@@ -51,29 +51,29 @@ const loginUser = (req, res) => {
 };
 
 
-// CREATE Media Record
-const addMedia = (newMedia, req, res) => {
-    MEDIA
+// CREATE Video Record
+const addVideo = (newVideo, req, res) => {
+    VIDEO
     .create({
-        mediaData: newMedia 
-    }, (err, media) => {
+        videoData: newVideo 
+    }, (err, video) => {
         if (err) {
             sendJSONResponse(res, 404, err);
         } else {
-            sendJSONResponse(res, 201, media);
+            sendJSONResponse(res, 201, video);
         }
     })
 };
 
-// READ All Media * return only latest version of each *
-const getAllMediaRecords = (req, res) => {
-    MEDIA
+// READ All Video * return only latest version of each *
+const getAllVideoRecords = (req, res) => {
+    VIDEO
     .find()
-    .slice('mediaData', -1)
-    .exec((err, media) => {
-        if (!media) {
+    .slice('videoData', -1)
+    .exec((err, video) => {
+        if (!video) {
             sendJSONResponse(res, 404, {
-                "message" : "No Media found"
+                "message" : "No Video found"
             });
             return;
         } else if (err) {
@@ -81,19 +81,19 @@ const getAllMediaRecords = (req, res) => {
             return;
         }
 
-        sendJSONResponse(res, 200, media);
+        sendJSONResponse(res, 200, video);
 
     });
 };
 
-// READ all media versions for specific Media
-const getAllMediaVersionsByID = (mediaID, req, res) => {
-    MEDIA
-    .findById(mediaID)
-    .exec((err, media) => {
-        if (!media) {
+// READ all video versions for specific Video
+const getAllVideoVersionsByID = (videoID, req, res) => {
+    VIDEO
+    .findById(videoID)
+    .exec((err, video) => {
+        if (!video) {
             sendJSONResponse(res, 404, {
-                "message" : "No Media found with that ID"
+                "message" : "No Video found with that ID"
             });
             return;
         } else if (err) {
@@ -101,20 +101,20 @@ const getAllMediaVersionsByID = (mediaID, req, res) => {
             return;
         }
 
-        sendJSONResponse(res, 200, media);
+        sendJSONResponse(res, 200, video);
 
     });
 };
 
-// READ most recent Media Record Version
-const getMostRecentMediaVersion = (mediaID, req, res) => {
-    MEDIA
-    .findById(mediaID)
-    .slice('mediaData', -1)
-    .exec((err, media) => {
-        if (!media) {
+// READ most recent Video Record Version
+const getMostRecentVideoVersion = (videoID, req, res) => {
+    VIDEO
+    .findById(videoID)
+    .slice('videoData', -1)
+    .exec((err, video) => {
+        if (!video) {
             sendJSONResponse(res, 404, {
-                "message" : "No Media found with that ID"
+                "message" : "No Video found with that ID"
             });
             return;
         } else if (err) {
@@ -122,20 +122,20 @@ const getMostRecentMediaVersion = (mediaID, req, res) => {
             return;
         }
 
-        sendJSONResponse(res, 200, media);
+        sendJSONResponse(res, 200, video);
 
     });
 }
 
-// READ specific Media Record Version
-const getSpecificMediaVersion = (mediaID, versionNumber, req, res) => {
-    MEDIA
-    .findById(mediaID)
-    .select({ mediaData: { $elemMatch: { versionID: versionNumber } } })
-    .exec((err, media) => {
-        if (!media) {
+// READ specific Video Record Version
+const getSpecificVideoVersion = (videoID, versionNumber, req, res) => {
+    VIDEO
+    .findById(videoID)
+    .select({ videoData: { $elemMatch: { versionID: versionNumber } } })
+    .exec((err, video) => {
+        if (!video) {
             sendJSONResponse(res, 404, {
-                "message" : "No Media found with that ID"
+                "message" : "No Video found with that ID"
             });
             return;
         } else if (err) {
@@ -144,8 +144,8 @@ const getSpecificMediaVersion = (mediaID, versionNumber, req, res) => {
         }
 
         // Check that query does not return empty object
-        if (media.mediaData && media.mediaData.length > 0) {
-            sendJSONResponse(res, 200, media); 
+        if (video.videoData && video.videoData.length > 0) {
+            sendJSONResponse(res, 200, video); 
         } else {
             sendJSONResponse(res, 404, {
                 "message" : "No version found with that version number"
@@ -155,15 +155,15 @@ const getSpecificMediaVersion = (mediaID, versionNumber, req, res) => {
     
 };
 
-// UPDATE Media Record (Create a new version)
-const updateMediaByID = (mediaID, newMedia, req, res) => {
-    MEDIA
-    .findById(mediaID)
-    .slice('mediaData', -1)
-    .exec((err, media) => {
-        if (!media) {
+// UPDATE Video Record (Create a new version)
+const updateVideoByID = (videoID, newVideo, req, res) => {
+    VIDEO
+    .findById(videoID)
+    .slice('videoData', -1)
+    .exec((err, video) => {
+        if (!video) {
             sendJSONResponse(res, 404, {
-                "message" : "No Media found with that ID"
+                "message" : "No Video found with that ID"
             });
             return;
         } else if (err) {
@@ -172,54 +172,54 @@ const updateMediaByID = (mediaID, newMedia, req, res) => {
         }
 
         // Get data from the last version of the document so that the version number can be incremented
-        let lastMedia = media.mediaData[0];
+        let lastVideo = video.videoData[0];
 
-        let lastVersionID = parseInt(lastMedia.versionID);
+        let lastVersionID = parseInt(lastVideo.versionID);
 
         console.log(`last version: ${lastVersionID}`);
 
-        newMedia.versionID = lastVersionID + 1;
+        newVideo.versionID = lastVersionID + 1;
 
-        console.log(newMedia);
+        console.log(newVideo);
 
-        media.mediaData.push(newMedia);
-        media.save((err, media) => {
+        video.videoData.push(newVideo);
+        video.save((err, video) => {
             if (err) {
                 sendJSONResponse(res, 400, err);
             } else {
-                sendJSONResponse(res, 201, media);
+                sendJSONResponse(res, 201, video);
             }
         }); 
     });
 };
 
-// DELETE Media Record
-const deleteMediaByID = (mediaID, req, res) => {
-    MEDIA
-    .findByIdAndRemove(mediaID)
-    .exec((err, media) => {
+// DELETE Video Record
+const deleteVideoByID = (videoID, req, res) => {
+    VIDEO
+    .findByIdAndRemove(videoID)
+    .exec((err, video) => {
         if (err) {
             sendJSONResponse(res, 404, err);
             return;
         }
 
         sendJSONResponse(res, 204, {
-            "message" : `Media with ID: ${mediaID} successfully deleted`
+            "message" : `Video with ID: ${videoID} successfully deleted`
         });
     });
 };
 
-// DELETE specific version of media record
-const deleteSpecificMediaVersion = (mediaID, versionNumber, req, res) => {
-    MEDIA
+// DELETE specific version of video record
+const deleteSpecificVideoVersion = (videoID, versionNumber, req, res) => {
+    VIDEO
     .update(
-        { _id: mediaID},
-        { $pull: { mediaData: { versionID: versionNumber } } }
+        { _id: videoID},
+        { $pull: { videoData: { versionID: versionNumber } } }
     )
-    .exec((err, media) => {
-        if (!media) {
+    .exec((err, video) => {
+        if (!video) {
             sendJSONResponse(res, 404, {
-                "message" : "No Media found with that ID"
+                "message" : "No Video found with that ID"
             });
             return;
         } else if (err) {
@@ -228,7 +228,7 @@ const deleteSpecificMediaVersion = (mediaID, versionNumber, req, res) => {
         }
 
         sendJSONResponse(res, 201, {
-            "message" : `Media with ID: ${mediaID} and Version Number: ${versionNumber} successfully deleted`
+            "message" : `Video with ID: ${videoID} and Version Number: ${versionNumber} successfully deleted`
         });
 
     });
@@ -237,12 +237,12 @@ const deleteSpecificMediaVersion = (mediaID, versionNumber, req, res) => {
 module.exports = {
     addUser,
     loginUser,
-    addMedia,
-    getAllMediaRecords,
-    getAllMediaVersionsByID,
-    getMostRecentMediaVersion,
-    getSpecificMediaVersion,
-    updateMediaByID,
-    deleteMediaByID,
-    deleteSpecificMediaVersion
+    addVideo,
+    getAllVideoRecords,
+    getAllVideoVersionsByID,
+    getMostRecentVideoVersion,
+    getSpecificVideoVersion,
+    updateVideoByID,
+    deleteVideoByID,
+    deleteSpecificVideoVersion
 };
