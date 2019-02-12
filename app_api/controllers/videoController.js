@@ -19,7 +19,8 @@ const addNewVideo = (req, res) => {
             videoAudioBitRate: req.body.videoAudioBitRate,
             VideoAudioChannels: req.body.VideoAudioChannels,
             videoAudioSampleRate: req.body.videoAudioSampleRate,
-            videoSize: req.body.videoSize
+            videoEncodingType: req.body.videoEncodingType,
+            videoSize: req.body.videoSize            
         };
         DAL.addVideo(newVideo, req, res);
     } else {
@@ -91,6 +92,7 @@ const updateVideo = (req, res) => {
             videoAudioBitRate: req.body.videoAudioBitRate,
             videoAudioChannels: req.body.videoAudioChannels,
             videoAudioSampleRate: req.body.videoAudioSampleRate,
+            videoEncodingType: req.body.videoEncodingType,
             videoSize: req.body.videoSize
         }
 
