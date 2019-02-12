@@ -2,12 +2,19 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const USER = mongoose.model('user');
 const VIDEO = mongoose.model('video');
+const AUDIO = mongoose.model('audio');
 
 
 const sendJSONResponse = (res, status, content) => {
     res.status(status);
     res.json(content);
 }
+
+/********************************************************************************************** */
+/*                                                                                              */
+/*                              USER DATABASE METHODS                                          */
+/*                                                                                              */
+/********************************************************************************************** */
 
 // CREATE user
 const addUser = (newUser, req, res) => {
@@ -50,6 +57,11 @@ const loginUser = (req, res) => {
         }) (req, res);
 };
 
+/********************************************************************************************** */
+/*                                                                                              */
+/*                              VIDEO DATABASE METHODS                                          */
+/*                                                                                              */
+/********************************************************************************************** */
 
 // CREATE Video Record
 const addVideo = (newVideo, req, res) => {
@@ -234,6 +246,195 @@ const deleteSpecificVideoVersion = (videoID, versionNumber, req, res) => {
     });
 };
 
+/********************************************************************************************** */
+/*                                                                                              */
+/*                              AUDIO DATABASE METHODS                                          */
+/*                                                                                              */
+/********************************************************************************************** */
+
+// CREATE Audio Record
+const addAudio = (newAudio, req, res) => {
+    AUDIO
+    .create({
+        audioData: newAudio 
+    }, (err, audio) => {
+        if (err) {
+            sendJSONResponse(res, 404, err);
+        } else {
+            sendJSONResponse(res, 201, audio);
+        }
+    })
+};
+
+// READ All Audio * return only latest version of each *
+const getAllAudioRecords = (req, res) => {
+    AUDIO
+    .find()
+    .slice('audioData', -1)
+    .exec((err, audio) => {
+        if (!audio) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Audio found"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        sendJSONResponse(res, 200, audio);
+
+    });
+};
+
+// READ all audio versions for specific Audio
+const getAllAudioVersionsByID = (audioID, req, res) => {
+    AUDIO
+    .findById(audioID)
+    .exec((err, audio) => {
+        if (!audio) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Audio found with that ID"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        sendJSONResponse(res, 200, audio);
+
+    });
+};
+
+// READ most recent Audio Record Version
+const getMostRecentAudioVersion = (audioID, req, res) => {
+    AUDIO
+    .findById(audioID)
+    .slice('audioData', -1)
+    .exec((err, audio) => {
+        if (!audio) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Audio found with that ID"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        sendJSONResponse(res, 200, audio);
+
+    });
+}
+
+// READ specific Audio Record Version
+const getSpecificAudioVersion = (audioID, versionNumber, req, res) => {
+    AUDIO
+    .findById(audioID)
+    .select({ audioData: { $elemMatch: { versionID: versionNumber } } })
+    .exec((err, audio) => {
+        if (!audio) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Audio found with that ID"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        // Check that query does not return empty object
+        if (audio.audioData && audio.audioData.length > 0) {
+            sendJSONResponse(res, 200, audio); 
+        } else {
+            sendJSONResponse(res, 404, {
+                "message" : "No version found with that version number"
+            });
+        }   
+    });
+    
+};
+
+// UPDATE Audio Record (Create a new version)
+const updateAudioByID = (audioID, newAudio, req, res) => {
+    AUDIO
+    .findById(audioID)
+    .slice('audioData', -1)
+    .exec((err, audio) => {
+        if (!audio) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Audio found with that ID"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        // Get data from the last version of the document so that the version number can be incremented
+        let lastAudio = audio.audioData[0];
+
+        let lastVersionID = parseInt(lastAudio.versionID);
+
+        console.log(`last version: ${lastVersionID}`);
+
+        newAudio.versionID = lastVersionID + 1;
+
+        console.log(newAudio);
+
+        audio.audioData.push(newAudio);
+        audio.save((err, audio) => {
+            if (err) {
+                sendJSONResponse(res, 400, err);
+            } else {
+                sendJSONResponse(res, 201, audio);
+            }
+        }); 
+    });
+};
+
+// DELETE Audio Record
+const deleteAudioByID = (audioID, req, res) => {
+    AUDIO
+    .findByIdAndRemove(audioID)
+    .exec((err, audio) => {
+        if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        sendJSONResponse(res, 204, {
+            "message" : `Audio with ID: ${audioID} successfully deleted`
+        });
+    });
+};
+
+// DELETE specific version of audio record
+const deleteSpecificAudioVersion = (audioID, versionNumber, req, res) => {
+    AUDIO
+    .update(
+        { _id: audioID},
+        { $pull: { audioData: { versionID: versionNumber } } }
+    )
+    .exec((err, audio) => {
+        if (!audio) {
+            sendJSONResponse(res, 404, {
+                "message" : "No Audio found with that ID"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        sendJSONResponse(res, 201, {
+            "message" : `Audio with ID: ${audioID} and Version Number: ${versionNumber} successfully deleted`
+        });
+
+    });
+};
+
 module.exports = {
     addUser,
     loginUser,
@@ -244,5 +445,13 @@ module.exports = {
     getSpecificVideoVersion,
     updateVideoByID,
     deleteVideoByID,
-    deleteSpecificVideoVersion
+    deleteSpecificVideoVersion,
+    addAudio,
+    getAllAudioRecords,
+    getAllAudioVersionsByID,
+    getMostRecentAudioVersion,
+    getSpecificAudioVersion,
+    updateAudioByID,
+    deleteAudioByID,
+    deleteSpecificAudioVersion
 };

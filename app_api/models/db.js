@@ -25,3 +25,4 @@ mongoose.connection.on('disconnected', () => {
 
 require('./user');
 require('./video');
+require('./audio');
