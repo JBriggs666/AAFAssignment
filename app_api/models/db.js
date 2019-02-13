@@ -24,4 +24,5 @@ mongoose.connection.on('disconnected', () => {
 });
 
 require('./user');
-require('./media');
+require('./video');
+require('./audio');
