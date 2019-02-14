@@ -1,8 +1,14 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
-const USER = mongoose.model('user');
-const VIDEO = mongoose.model('video');
-const AUDIO = mongoose.model('audio');
+// const USER = mongoose.model('user');
+// const VIDEO = mongoose.model('video');
+// const AUDIO = mongoose.model('audio');
+const VIDEO = require('./video');
+const USER = require('./user');
+const AUDIO = require('./audio');
+
+
+
 
 
 const sendJSONResponse = (res, status, content) => {
