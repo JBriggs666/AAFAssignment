@@ -1,0 +1,70 @@
+<div>
+    <h1>Add New Video</h1>
+
+    <label>* Required Fields</label>
+    <div class="col-lg-12">
+        <form>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="videoFileName">Filename*:</label>
+                    <input id="videoFileName" type="text" placeholder="Filename" ng-model="vm.video.videoFileName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="videoLength">Video Length:</label>
+                    <input id="videoLength" type="text" placeholder="Video Length" ng-model="vm.video.videoLength" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="videoFrameWidth">Frame Width:</label>
+                    <input id="videoFrameWidth" type="number" placeholder="Frame Width" ng-model="vm.video.videoFrameWidth" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="videoFrameHeight">Frame Height:</label>
+                    <input id="videoFrameHeight" type="number" placeholder="Frame Height" ng-model="vm.video.videoFrameHeight" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="videoDataRate">Data Rate:</label>
+                    <input id="videoDataRate" type="text" placeholder="Data Rate" ng-model="vm.video.videoDataRate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="videoTotalBitRate">Total Bit Rate:</label>
+                    <input id="videoTotalBitRate" type="text" placeholder="Total Bit Rate" ng-model="vm.video.videoTotalBitRate" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="videoFrameRate">Frame Rate:</label>
+                    <input id="videoFrameRate" type="text" placeholder="Frame Rate" ng-model="vm.video.videoFrameRate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="videoEncodingType">Encoding Type</label>
+                    <input id="videoEncodingType" type="text" placeholder="Encoding Type" ng-model="vm.video.videoEncodingType" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="videoAudioBitRate">Audio Bit Rate:</label>
+                    <input id="videoAudioBitRate" type="text" placeholder="Audio Bit Rate" ng-model="vm.video.videoAudioBitRate" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="videoAudioChannels">Audio Channels:</label>
+                    <input id="videoAudioChannels" type="number" placeholder="Audio Channels" ng-model="vm.video.videoAudioChannels" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="videoAudioSampleRate">Audio Sample Rate:</label>
+                    <input id="videoAudioSampleRate" type="text" placeholder="Audio Sample Rate" ng-model="vm.video.videoAudioSampleRate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="videoSize">File Size:</label>
+                    <input id="videoSize" type="text" placeholder="File Size" ng-model="vm.video.videoSize" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" ng-click="vm.addVideo()">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

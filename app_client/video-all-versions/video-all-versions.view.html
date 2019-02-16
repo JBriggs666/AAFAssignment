@@ -1,0 +1,104 @@
+<div>
+    <h1>All Video Versions</h1>
+
+    <div ng-repeat="video in vm.videos.videoData">
+            <table>
+                    <tr>
+                        <td>
+                            Filename:
+                        </td>
+                        <td>
+                            {{ video.videoFileName }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Length:
+                        </td>
+                        <td>
+                            {{ video.videoLength }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Frame Width  
+                        </td>
+                        <td>
+                            {{ video.videoFrameWidth }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Frame Height  
+                        </td>
+                        <td>
+                            {{ video.videoFrameHeight }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Data Rate  
+                        </td>
+                        <td>
+                            {{ video.videoDataRate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Total Bit Rate  
+                        </td>
+                        <td>
+                            {{ video.videoTotalBitRate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Frame Rate 
+                        </td>
+                        <td>
+                            {{ video.videoFrameRate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Encoding Type  
+                        </td>
+                        <td>
+                            {{ video.videoEncodingType }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Audio Bit Rate  
+                        </td>
+                        <td>
+                            {{ video.videoAudioBitRate }}
+                        </td>
+                    </tr>        
+                    <tr>
+                        <td>
+                            Audio Sample Rate  
+                        </td>
+                        <td>
+                            {{ video.videoAudioSampleRate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            File Size 
+                        </td>
+                        <td>
+                            {{ video.videoSize }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            File Version  
+                        </td>
+                        <td>
+                            {{ video.versionID }}
+                        </td>
+                    </tr>
+                </table>
+    </div>
+</div>
