@@ -17,6 +17,11 @@ function config ($routeProvider, $locationProvider) {
             controller: 'videoAllVersionsCtrl',
             controllerAs: 'vm'
         })
+        .when('/media/video/:videoid/version/:versionnumber', {
+            templateUrl: '/video-specific-version/video-specific-version.view.html',
+            controller: 'videoSpecificVersionCtrl',
+            controllerAs: 'vm'
+        })
         .when('/media/video/create', {
             templateUrl: '/create-video/create-video.view.html',
             controller: 'createVideoCtrl',

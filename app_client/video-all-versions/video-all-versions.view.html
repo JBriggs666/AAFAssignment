@@ -1,6 +1,12 @@
 <div>
     <h1>All Video Versions</h1>
 
+    <span class="share-button-toolbar btn-space">
+        <div>
+            <a ng-click="vm.deleteVideo()" confirm="This process is irreversible.  Are you sure you want to delete this video?" class="btn pull-right btn-danger">Delete This Video</a>
+        </div>
+    </span>
+
     <div ng-repeat="video in vm.videos.videoData">
             <table>
                     <tr>
