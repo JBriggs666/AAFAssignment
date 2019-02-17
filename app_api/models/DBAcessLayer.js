@@ -181,18 +181,28 @@ const updateVideoByID = (videoID, newVideo, req, res) => {
         } else if (err) {
             sendJSONResponse(res, 404, err);
             return;
-        }
+        } 
 
+        
         // Get data from the last version of the document so that the version number can be incremented
         let lastVideo = video.videoData[0];
 
+        // TODO: Handle this is in the front end, as stopping user from deleting locked video will be very difficult if it can be done at all.
+        // Code to be removed
+        // Ensure users can't edit video if file is locked
+        // let fileIsLocked = lastVideo.fileisLocked;
+
+        // if (fileIsLocked) {
+        //     sendJSONResponse(res, 403, {
+        //         "message" : `File is locked for editing by ${lastVideo.fileLockedBy}`
+        //     });
+        //     return;
+        // }
+
+        // increment version number manaully, so versions are always logical
         let lastVersionID = parseInt(lastVideo.versionID);
 
-        console.log(`last version: ${lastVersionID}`);
-
         newVideo.versionID = lastVersionID + 1;
-
-        console.log(newVideo);
 
         video.videoData.push(newVideo);
         video.save((err, video) => {
@@ -202,6 +212,31 @@ const updateVideoByID = (videoID, newVideo, req, res) => {
                 sendJSONResponse(res, 201, video);
             }
         }); 
+    });
+};
+
+// UPDATE File Lock status of a video version
+const updateFileLockByIDAndVersionNumber = (videoID, versionNumber, fileLock, username, req, res) => {
+
+    VIDEO
+    .findOneAndUpdate(
+        {
+            "_id": videoID,
+            "videoData.versionID": versionNumber
+        },
+        { "$set": {
+            "videoData.$.fileisLocked" : fileLock,
+            "videoData.$.fileLockedBy" : username
+            }
+        },
+        { "new" : true }
+    )
+    .exec((err, video) => {
+        if (err) {
+            sendJSONResponse(res, 400, err);
+        } else {
+            sendJSONResponse(res, 201, video);
+        }
     });
 };
 
@@ -444,6 +479,7 @@ module.exports = {
     getMostRecentVideoVersion,
     getSpecificVideoVersion,
     updateVideoByID,
+    updateFileLockByIDAndVersionNumber,
     deleteVideoByID,
     deleteSpecificVideoVersion,
     addAudio,

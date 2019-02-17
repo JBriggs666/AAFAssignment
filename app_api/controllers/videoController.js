@@ -1,6 +1,6 @@
 const DAL = require('../models/DBAcessLayer');
 
-const sendJSONRepsonse = (res, status, content) => {
+const sendJSONResponse = (res, status, content) => {
     res.status(status);
     res.json(content)
 };
@@ -24,7 +24,7 @@ const addNewVideo = (req, res) => {
         };
         DAL.addVideo(newVideo, req, res);
     } else {
-        sendJSONRepsonse (res, 400, {
+        sendJSONResponse (res, 400, {
             "message" : "Video information required to insert new video record into database"
         })
     }
@@ -43,7 +43,7 @@ const getAllVideoVersionsByID = (req, res) => {
         DAL.getAllVideoVersionsByID(videoID, req, res);
 
     } else {
-        sendJSONRepsonse(res, 400, {
+        sendJSONResponse(res, 400, {
             "message" : "video id required to locate records"
         });
     }
@@ -56,7 +56,7 @@ const getLatestVideoVersionByID = (req, res) => {
 
         DAL.getMostRecentVideoVersion(videoID, req, res);
     } else {
-        sendJSONRepsonse(res, 400, {
+        sendJSONResponse(res, 400, {
             "message" : "video id required to locate records"
         });
     }
@@ -71,7 +71,7 @@ const getSpecificVideoVersion = (req, res) => {
         DAL.getSpecificVideoVersion(videoID, versionNumber, req, res);
 
     } else {
-        sendJSONRepsonse(res, 400, {
+        sendJSONResponse(res, 400, {
             "message" : "video id and version number required to locate records"
         });
     }
@@ -99,9 +99,36 @@ const updateVideo = (req, res) => {
         DAL.updateVideoByID(videoID, updatedVideo, req, res);
 
     } else {
-        sendJSONRepsonse (res, 400, {
+        sendJSONResponse (res, 400, {
             "message" : "Video information required to insert new video record into database"
         })
+    }
+};
+
+// UPDATE file lock of video version
+const updateFileLock = (req, res) => {
+    if (req.params.videoid && req.params.versionnumber && req.body.fileLock) {
+        console.log('running update file lock');
+        let videoID = req.params.videoid;
+        let videoVersion = req.params.versionnumber;
+        let fileLock = JSON.parse(req.body.fileLock);
+        let username = '';
+
+        // TODO: Need to get username from jwt token when auth added
+        if (fileLock === true) {
+             username = 'jason.briggs001@gmail.com';
+        } else {
+             username = '';
+        };
+
+        console.log(`fileLock: ${fileLock}`);
+
+        DAL.updateFileLockByIDAndVersionNumber(videoID, videoVersion, fileLock, username, req, res);
+    
+    } else {
+        sendJSONResponse (res, 400, {
+            "message" : "Video Id, version number and fileLock are all required"
+        });
     }
 };
 
@@ -113,7 +140,7 @@ const deleteVideoByID = (req, res) => {
         DAL.deleteVideoByID(videoID, req, res);
 
     } else {
-        sendJSONRepsonse(res, 400, {
+        sendJSONResponse(res, 400, {
             "message" : "video id required to locate records for deletion"
         });
     }
@@ -128,7 +155,7 @@ const deleteSpecificVideoVersion = (req, res) => {
         DAL.deleteSpecificVideoVersion(videoID, versionNumber, req, res);
         
     } else {
-        sendJSONRepsonse(res, 400, {
+        sendJSONResponse(res, 400, {
             "message" : "video id and version number required to locate records for deletion"
         });
     }
@@ -142,6 +169,7 @@ module.exports = {
     getLatestVideoVersionByID,
     getSpecificVideoVersion,
     updateVideo,
+    updateFileLock,
     deleteVideoByID,
     deleteSpecificVideoVersion
 };
