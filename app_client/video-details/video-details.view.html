@@ -1,18 +1,20 @@
 <navigation></navigation>
 
-<div>
+<div class="container-fluid">
     <h1>Video Latest Version</h1>
 
     <a href="/media/video/{{vm.videoID}}/version/all">View all versions</a>
 
     <span class="share-button-toolbar btn-space">
         <div>
+            <a ng-click="vm.updateVersion()" confirm="Do you want to update this video?" class="btn pull-right btn-primary">Update Video</a>
             <a ng-click="vm.deleteVersion()" confirm="This process is irreversible.  Are you sure you want to delete this version?" class="btn pull-right btn-danger">Delete This Version</a>
         </div>
     </span>
 
     <div>
-        <table>
+        <table class="table table-dark table-striped">
+            <tbody>
             <tr>
                 <td>
                     Filename:
@@ -109,6 +111,7 @@
                     {{ vm.video.videoData[0].versionID }}
                 </td>
             </tr>
+        </tbody>
         </table>
     </div>
 </div>

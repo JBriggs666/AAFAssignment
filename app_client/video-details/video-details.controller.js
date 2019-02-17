@@ -15,6 +15,11 @@ angular
             console.log(vm.video);
         });
 
+        vm.updateVersion = function () {
+            console.log('update clicked');
+            $location.path('/media/video/' + videoID + '/update');
+        };
+
         vm.deleteVersion = function () {
             console.log('delete clicked');
             videoData.deleteVersion(vm.videoID, vm.videoVersion).then(function (result) {

@@ -1,11 +1,12 @@
 <navigation></navigation>
 
 <div>
-        <h1>Update Video</h1>
+    <h1>Update Video</h1>
     
-        <label>* Required Fields</label>
-        <div class="col-lg-12">
-            <form>
+    <label>* Required Fields</label>
+    <div class="container-fluid col-lg-12">
+        <form>
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="videoFileName">Filename*:</label>
@@ -18,13 +19,13 @@
                     <div class="form-group">
                         <label for="videoFrameWidth">Frame Width:</label>
                         <input id="videoFrameWidth" type="number" placeholder="Frame Width" ng-model="vm.video.videoFrameWidth" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
+                    </div>                
                     <div class="form-group">
                         <label for="videoFrameHeight">Frame Height:</label>
                         <input id="videoFrameHeight" type="number" placeholder="Frame Height" ng-model="vm.video.videoFrameHeight" class="form-control">
                     </div>
+                </div>
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="videoDataRate">Data Rate:</label>
                         <input id="videoDataRate" type="text" placeholder="Data Rate" ng-model="vm.video.videoDataRate" class="form-control">
@@ -33,8 +34,6 @@
                         <label for="videoTotalBitRate">Total Bit Rate:</label>
                         <input id="videoTotalBitRate" type="text" placeholder="Total Bit Rate" ng-model="vm.video.videoTotalBitRate" class="form-control">
                     </div>
-                </div>
-                <div class="col-md-4">
                     <div class="form-group">
                         <label for="videoFrameRate">Frame Rate:</label>
                         <input id="videoFrameRate" type="text" placeholder="Frame Rate" ng-model="vm.video.videoFrameRate" class="form-control">
@@ -43,12 +42,12 @@
                         <label for="videoEncodingType">Encoding Type</label>
                         <input id="videoEncodingType" type="text" placeholder="Encoding Type" ng-model="vm.video.videoEncodingType" class="form-control">
                     </div>
+                </div>
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="videoAudioBitRate">Audio Bit Rate:</label>
                         <input id="videoAudioBitRate" type="text" placeholder="Audio Bit Rate" ng-model="vm.video.videoAudioBitRate" class="form-control">
                     </div>
-                </div>
-                <div class="col-md-4">
                     <div class="form-group">
                         <label for="videoAudioChannels">Audio Channels:</label>
                         <input id="videoAudioChannels" type="number" placeholder="Audio Channels" ng-model="vm.video.videoAudioChannels" class="form-control">
@@ -67,6 +66,7 @@
                         <button type="submit" class="btn btn-primary" ng-click="vm.updateVideo()">Submit</button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+</div>

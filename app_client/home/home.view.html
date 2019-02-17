@@ -1,25 +1,28 @@
 <navigation></navigation>
 
-<div>
+<div class="container-fluid">
     <h1> Number of Videos: {{vm.noOfVideos}}</h1>    
 
-    <table ng-repeat="video in vm.videos">
-        <tr>
-            <td>Filename:</td>
-            <td>
-                <a href="/media/video/{{video._id}}/version">
-                    {{ video.videoData[0].videoFileName }}
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>Video Size:</td>
-            <td>{{ video.videoData[0].videoSize }}</td>
-        </tr>
-        <tr>
-            <td>Version Number</td>
-            <td>{{ video.videoData[0].versionID }}</td>
-        </tr>
-    </table>
-    
+    <div ng-repeat="video in vm.videos">
+        <table class="table table-dark table-striped">
+            <tbody>
+                <tr>
+                    <td>Filename:</td>
+                    <td>
+                        <a href="/media/video/{{video._id}}/version">
+                            {{ video.videoData[0].videoFileName }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Video Size:</td>
+                    <td>{{ video.videoData[0].videoSize }}</td>
+                </tr>
+                <tr>
+                    <td>Version Number</td>
+                    <td>{{ video.videoData[0].versionID }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
