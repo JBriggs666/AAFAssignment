@@ -35,6 +35,17 @@ const getAllVideoRecords = (req, res) => {
     DAL.getAllVideoRecords(req, res);
 };
 
+// READ search video records
+const searchVideoRecords = (req, res) => {
+    if (req.query) {
+
+    } else {
+        sendJSONResponse(res, 400, {
+            "message" : "Search parameters required for search"
+        });
+    }
+};
+
 // READ all video versions for specific video
 const getAllVideoVersionsByID = (req, res) => {
     if (req.params && req.params.videoid) {
@@ -165,6 +176,7 @@ const deleteSpecificVideoVersion = (req, res) => {
 module.exports = {
     addNewVideo,
     getAllVideoRecords,
+    searchVideoRecords,
     getAllVideoVersionsByID,
     getLatestVideoVersionByID,
     getSpecificVideoVersion,

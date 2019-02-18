@@ -2,44 +2,76 @@ angular
     .module('aafapp')
     .service('videoData', videoData);
 
-    videoData.$inject = ['$http'];
+    videoData.$inject = ['$http', 'authentication'];
 
-    function videoData ($http) {
+    function videoData ($http, authentication) {
 
         // Create
         var addVideo = function (videoData) {
-            return $http.post('/api/media/video', videoData);
+            return $http.post('/api/media/video', videoData, {
+                headers : {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
         };
 
         // Read
         var getAllVideos = function () {
-            return $http.get('/api/media/video');
+            return $http.get('/api/media/video', {
+                headers : {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
         };
 
         var getVideoDetails = function (videoID) {
-            return $http.get('/api/media/video/' + videoID + '/version');
+            return $http.get('/api/media/video/' + videoID + '/version', {
+                headers : {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
         };
 
         var getAllVersions = function (videoID) {
-            return $http.get('/api/media/video/' + videoID);
+            return $http.get('/api/media/video/' + videoID, {
+                headers : {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
         };
 
         var getSpecificVersion = function(videoID, videoVersion) {
-            return $http.get('/api/media/video/' + videoID + '/version/' + videoVersion);
+            return $http.get('/api/media/video/' + videoID + '/version/' + videoVersion, {
+                headers : {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
         }
 
         // Update 
         var updateVideo = function (videoID, videoData) {
-            return $http.put('/api/media/video/' + videoID, videoData);
+            return $http.put('/api/media/video/' + videoID, videoData, {
+                headers : {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
         };
 
         // Delete
         var deleteVersion = function (videoID, videoVersion) {
-            return $http.delete('/api/media/video/' + videoID + '/version/' + videoVersion);
+            return $http.delete('/api/media/video/' + videoID + '/version/' + videoVersion, {
+                headers : {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
         };
 
         var deleteVideo = function (videoID) {
-            return $http.delete('/api/media/video/' + videoID);
+            return $http.delete('/api/media/video/' + videoID, {
+                headers : {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
         };
 
         return {

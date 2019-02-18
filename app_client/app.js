@@ -7,6 +7,11 @@ function config ($routeProvider, $locationProvider) {
             controller: 'homeCtrl',
             controllerAs: 'vm'
         })
+        .when('/login', {
+            templateUrl: 'login/login.view.html',
+            controller: 'loginCtrl',
+            controllerAs: 'vm'
+        })
         .when('/media/video/:videoid/version', {
             templateUrl: '/video-details/video-details.view.html',
             controller: 'videoDetailsViewCtrl',
