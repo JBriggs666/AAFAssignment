@@ -13,10 +13,16 @@ angular
         if (!vm.isLoggedIn) {
             $location.path('/login');
         } else {
+
             videoData.getSpecificVersion(videoID, videoVersion).then(function (result) {
                 console.log(result.data);
                 vm.video = result.data;
                 vm.videoID = videoID;
             });
+
+            vm.getSpecificVersion = function () {
+                vm.specificVersion;
+                $location.path('/media/video/' + videoID + '/version/' + vm.specificVersion);
+            };
         }        
     };

@@ -13,6 +13,8 @@ angular
             $location.path('/login');
         } else {
 
+            vm.specificVersion = null;
+
             vm.fileLock = "";
             vm.username = authentication.currentUser().email;
 
@@ -24,10 +26,16 @@ angular
                 vm.fileLockUser = vm.video.fileLockedBy;
 
                 vm.videoVersion = vm.video.videoData[0].versionID;
+                vm.deleteable = vm.videoVersion > 1;
                 vm.videoDisplayDate = Date(vm.video.videoData[0].videoCreationDate);
                 console.log(vm.video);
             });
             
+            vm.getSpecificVersion = function () {
+                vm.specificVersion;
+                $location.path('/media/video/' + vm.videoID + '/version/' + vm.specificVersion);
+            };
+
             vm.lockFile = function () {
                 var lockData = {
                     fileLock: true,
@@ -56,12 +64,11 @@ angular
             };
 
             vm.deleteVersion = function () {
-                console.log('delete clicked');
-                videoData.deleteVersion(vm.videoID, vm.videoVersion).then(function (result) {
-                    console.log(result);
-                    // FIXME: not re-routing after deletion, for some reason. Also need to accoutn for fact it may be only version.
-                    $location.path('/media/video/' + videoID + '/version');
-                });
+                if (confirm('Are you sure you want to delete?  This process is irreversible')) {
+                    videoData.deleteVersion(videoID, vm.videoVersion).then(function () {
+                        $location.path('/');
+                    });
+                }
             };
         }
     };

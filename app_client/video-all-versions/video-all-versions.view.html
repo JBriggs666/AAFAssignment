@@ -6,7 +6,7 @@
     <div ng-if="vm.fileLock">
         <div ng-if="vm.username === vm.fileLockUser">
             <button class="btn btn-dark" ng-click="vm.unlockFile()">Unlock File</button>
-            <button class="btn btn-danger" ng-click="vm.deleteVersion()">Delete Video</button>
+            <button class="btn btn-danger" ng-click="vm.deleteVideo()">Delete Video</button>
         </div>
         <label>File is locked for editing by: {{ vm.fileLockUser }}</label>
     </div>
@@ -15,8 +15,8 @@
         <button class="btn btn-dark" ng-click="vm.lockFile()">Lock File For Editing</button>
     </div>
             
-    <div ng-repeat="video in vm.videos.videoData">
-        <table class="table table-dark table-striped">
+    <div class="row justify-content-center col-md-12" ng-repeat="video in vm.videos.videoData">
+        <table class="table table-dark table-striped col-md-10">
             <tbody>
                 <tr>
                     <td>

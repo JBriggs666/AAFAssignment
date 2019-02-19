@@ -2,7 +2,7 @@ angular
     .module('aafapp')
     .controller('videoAllVersionsCtrl', videoAllVersionsCtrl);
 
-    function videoAllVersionsCtrl ($routeParams, videoData, $location, authentication, $route) {
+    function videoAllVersionsCtrl ($routeParams, videoData, $location, authentication, $route, $window) {
         var videoID = $routeParams.videoid;
 
         var vm = this;
@@ -49,10 +49,11 @@ angular
             };
 
             vm.deleteVideo = function () {
-                console.log('video will be deleted');
-                videoData.deleteVideo(videoID).then(function () {
-                    $location.path('/');
-                });
+                if (confirm('Are you sure you want to delete?  This process is irreversible')) {
+                    videoData.deleteVideo(videoID).then(function () {
+                        $location.path('/');
+                    });
+                }
             };
         }        
     };
