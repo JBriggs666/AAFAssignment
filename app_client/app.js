@@ -37,6 +37,11 @@ function config ($routeProvider, $locationProvider) {
             controller: 'updateVideoCtrl',
             controllerAs: 'vm'
         })
+        .when('/media/video/search', {
+            templateUrl: '/video-search/video-search.view.html',
+            controller: 'videoSearchCtrl',
+            controllerAs: 'vm'
+        })
         .otherwise({
             templateUrl: 'error/error.view.html',
             controller: 'errorCtrl',

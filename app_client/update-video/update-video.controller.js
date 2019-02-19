@@ -11,6 +11,7 @@ angular
         vm.isLoggedIn = authentication.isLoggedIn();
 
         if (!vm.isLoggedIn) {
+            // return user to login screen if they are not logged in
             $location.path('/login');
         } else {
             
@@ -21,13 +22,7 @@ angular
                 vm.video = result.data.videoData[0];
 
                 vm.fileLock = result.data.fileisLocked;
-                vm.fileLockUser = result.data.fileLockedBy;
-                
-                console.log(result.data);
-                console.log(vm.fileLock);
-                console.log(vm.fileLockUser);
-
-                console.log(vm.video);
+                vm.fileLockUser = result.data.fileLockedBy;                
             });
 
             vm.updateVideo = function () {
@@ -43,15 +38,12 @@ angular
                 } 
             };
 
-            vm.lockFile = function () {
-                console.log("filelock clicked");
-
+            vm.lockFile = function () {                
+                // Send Boolean as a String so it doesn't affect error checking in API
                 var lockData = {
-                    fileLock: true,
+                    fileLock: 'true',
                     fileLockedBy: vm.username
                 };
-
-                console.log(lockData);
 
                 videoData.lockFile(videoID, lockData).then(function (result) {
                     $route.reload();
@@ -59,16 +51,11 @@ angular
             };
 
             vm.unlockFile = function () {
-                console.log("file unlock clicked");
-
-                var username = '';
-
+                // Send Boolean as a String so it doesn't affect error checking in API
                 var lockData = {
                     fileLock: 'false',
                     fileLockedBy: ''
                 };
-
-                console.log(lockData);
 
                 videoData.lockFile(videoID, lockData).then(function (result) {
                     $route.reload();

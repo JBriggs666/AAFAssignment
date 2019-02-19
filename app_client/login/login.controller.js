@@ -27,10 +27,11 @@ angular
             authentication
             .login(vm.credentials)
             .then(function successCallBack (response) {
-                console.log(authentication.currentUser());
                 $location.path('/');
             }, function errorCallBack (response) {
-                // TODO: Add validation Here
+                // return to login page if something went wrong, display response message and reset credentials
+                $location.path('/login');
+                vm.formError = response.data.message;
                 vm.credentials = angular.copy(credentials);                
             });
         }

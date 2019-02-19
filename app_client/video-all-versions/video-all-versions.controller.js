@@ -10,6 +10,7 @@ angular
         vm.isLoggedIn = authentication.isLoggedIn();
 
         if (!vm.isLoggedIn) {
+            // return user to login screen if they are not logged in
             $location.path('/login');
         } else {
             
@@ -27,8 +28,9 @@ angular
             });
     
             vm.lockFile = function () {
+                // Send Boolean as a String so it doesn't affect error checking in API
                 var lockData = {
-                    fileLock: true,
+                    fileLock: 'true',
                     fileLockedBy: vm.username
                 };
 
@@ -37,7 +39,8 @@ angular
                 });
             };
 
-            vm.unlockFile = function () {                
+            vm.unlockFile = function () {  
+                // Send Boolean as a String so it doesn't affect error checking in API              
                 var lockData = {
                     fileLock: 'false',
                     fileLockedBy: ''
