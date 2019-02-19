@@ -3,12 +3,18 @@
 <div class="container-fluid">
     <h1>All Video Versions</h1>
 
-    <span class="share-button-toolbar btn-space">
-        <div>
-            <a ng-click="vm.deleteVideo()" confirm="This process is irreversible.  Are you sure you want to delete this video?" class="btn pull-right btn-danger">Delete This Video</a>
+    <div ng-if="vm.fileLock">
+        <div ng-if="vm.username === vm.fileLockUser">
+            <button class="btn btn-dark" ng-click="vm.unlockFile()">Unlock File</button>
+            <button class="btn btn-danger" ng-click="vm.deleteVersion()">Delete Video</button>
         </div>
-    </span>
-
+        <label>File is locked for editing by: {{ vm.fileLockUser }}</label>
+    </div>
+    
+    <div ng-if="!vm.fileLock">
+        <button class="btn btn-dark" ng-click="vm.lockFile()">Lock File For Editing</button>
+    </div>
+            
     <div ng-repeat="video in vm.videos.videoData">
         <table class="table table-dark table-striped">
             <tbody>
