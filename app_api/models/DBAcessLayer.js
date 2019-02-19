@@ -216,17 +216,16 @@ const updateVideoByID = (videoID, newVideo, req, res) => {
 };
 
 // UPDATE File Lock status of a video version
-const updateFileLockByIDAndVersionNumber = (videoID, versionNumber, fileLock, username, req, res) => {
+const updateFileLockByIDAndVersionNumber = (videoID, fileLock, username, req, res) => {
 
     VIDEO
     .findOneAndUpdate(
         {
-            "_id": videoID,
-            "videoData.versionID": versionNumber
+            "_id": videoID
         },
         { "$set": {
-            "videoData.$.fileisLocked" : fileLock,
-            "videoData.$.fileLockedBy" : username
+            "fileisLocked" : fileLock,
+            "fileLockedBy" : username
             }
         },
         { "new" : true }

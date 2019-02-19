@@ -7,7 +7,7 @@ const sendJSONResponse = (res, status, content) => {
 
 // CREATE new video Record
 const addNewVideo = (req, res) => {
-    if (req.body && req.body.videoFileName) {
+    if (req.body && req.body.videoFileName && req.body.videoAuthor) {
         let newVideo = {
             videoFileName: req.body.videoFileName,
             videoLength: req.body.videoLength,
@@ -20,7 +20,9 @@ const addNewVideo = (req, res) => {
             VideoAudioChannels: req.body.VideoAudioChannels,
             videoAudioSampleRate: req.body.videoAudioSampleRate,
             videoEncodingType: req.body.videoEncodingType,
-            videoSize: req.body.videoSize            
+            videoSize: req.body.videoSize     ,
+            videoAuthor: req.body.videoAuthor,
+            videoKeywords: req.body.videoKeywords       
         };
         DAL.addVideo(newVideo, req, res);
     } else {
@@ -104,7 +106,10 @@ const updateVideo = (req, res) => {
             videoAudioChannels: req.body.videoAudioChannels,
             videoAudioSampleRate: req.body.videoAudioSampleRate,
             videoEncodingType: req.body.videoEncodingType,
-            videoSize: req.body.videoSize
+            videoSize: req.body.videoSize,
+            videoAuthor: req.body.videoAuthor,
+            videoKeywords: req.body.videoKeywords,
+            videoCreationDate: req.body.videoCreationDate
         }
 
         DAL.updateVideoByID(videoID, updatedVideo, req, res);
@@ -118,7 +123,7 @@ const updateVideo = (req, res) => {
 
 // UPDATE file lock of video version
 const updateFileLock = (req, res) => {
-    if (req.params.videoid && req.params.versionnumber && req.body.fileLock) {
+    if (req.params.videoid && req.body.fileLock) {
         console.log('running update file lock');
         let videoID = req.params.videoid;
         let videoVersion = req.params.versionnumber;
@@ -134,11 +139,11 @@ const updateFileLock = (req, res) => {
 
         console.log(`fileLock: ${fileLock}`);
 
-        DAL.updateFileLockByIDAndVersionNumber(videoID, videoVersion, fileLock, username, req, res);
+        DAL.updateFileLockByIDAndVersionNumber(videoID, fileLock, username, req, res);
     
     } else {
         sendJSONResponse (res, 400, {
-            "message" : "Video Id, version number and fileLock are all required"
+            "message" : "Video ID and fileLock are all required"
         });
     }
 };

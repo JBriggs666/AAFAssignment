@@ -22,7 +22,7 @@ router.get('/media/video/:videoid', auth, videoController.getAllVideoVersionsByI
 router.get('/media/video/:videoid/version', auth, videoController.getLatestVideoVersionByID);
 router.get('/media/video/:videoid/version/:versionnumber', auth, videoController.getSpecificVideoVersion);
 router.put('/media/video/:videoid', auth, videoController.updateVideo);
-router.patch('/media/video/:videoid/version/:versionnumber', auth, videoController.updateFileLock);
+router.patch('/media/video/:videoid', auth, videoController.updateFileLock);
 router.delete('/media/video/:videoid', auth, videoController.deleteVideoByID);
 router.delete('/media/video/:videoid/version/:versionnumber', auth, videoController.deleteSpecificVideoVersion);
 
