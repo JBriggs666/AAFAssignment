@@ -21,12 +21,16 @@ angular
             });
 
             vm.updateVideo = function () {
+                vm.formError = "";
+
                 if (vm.video.videoFileName) {
 
                     videoData.updateVideo(videoID, vm.video).then(function (result) {
                         $location.path('/media/video/' + result.data._id + '/version');
                     });
-                }    
+                } else {
+                    vm.formError = "Please enter all required fields";
+                } 
             };
         }
 

@@ -29,11 +29,15 @@ angular
             vm.video = angular.copy(emptyVideo);
 
             vm.addVideo = function () {
+                vm.formError = "";
+                
                 if (vm.video.videoFileName) {
                     videoData.addVideo(vm.video)
                         .then(function (result) {
                             $location.path('/media/video/' + result.data._id + '/version');
                         });
+                } else {
+                    vm.formError = "Please enter all required fields";
                 }
             };
         }

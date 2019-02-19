@@ -6,6 +6,7 @@
     <label>* Required Fields</label>
     <div class="container-fluid col-lg-12">
         <form>
+            <div role="alert" ng-show="vm.formError" class="alert alert-danger col-md-10">{{ vm.formError }}</div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">

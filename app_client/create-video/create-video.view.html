@@ -6,8 +6,9 @@
     <label>* Required Fields</label>
     <div class="container-fluid col-lg-12">        
         <form>
-            <div class="row">
-                <div class="col-md-4">
+            <div role="alert" ng-show="vm.formError" class="alert alert-danger col-md-10">{{ vm.formError }}</div>
+            <div class="row">                
+                <div class="col-md-4">                    
                     <div class="form-group">
                         <label for="videoFileName">Filename*:</label>
                         <input id="videoFileName" type="text" placeholder="Filename" ng-model="vm.video.videoFileName" class="form-control">

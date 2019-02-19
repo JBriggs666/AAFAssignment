@@ -14,8 +14,13 @@ angular
         vm.credentials = angular.copy(credentials);
 
         vm.onSubmit = function () {
-            // TODO: Add validation here
-            vm.login();
+            vm.formError = "";
+            if (!vm.credentials.email || !vm.credentials.password) {
+                vm.formError = "All fields required";
+                return false;
+            } else {
+                vm.login();
+            }            
         };
 
         vm.login = function () {
@@ -26,7 +31,7 @@ angular
                 $location.path('/');
             }, function errorCallBack (response) {
                 // TODO: Add validation Here
-                vm.credentials = angualr.copy(credentials);                
+                vm.credentials = angular.copy(credentials);                
             });
         }
 
