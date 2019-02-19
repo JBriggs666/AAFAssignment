@@ -167,6 +167,58 @@ const getSpecificVideoVersion = (videoID, versionNumber, req, res) => {
     
 };
 
+// READ search video records based on user input 
+const searchVideoRecords = (queryParams, req, res) => {
+
+    // build custom query based on supplied search parameters
+    let customQuery = {};
+
+    // use $regex to find partial string matches and use options to make matches case insensitive 
+    if (queryParams.videoFileName) {
+        customQuery.videoFileName = { $regex: `${queryParams.videoFileName}`, $options: 'i' };
+    } 
+
+    if (queryParams.videoEncodingType) {
+        customQuery.videoEncodingType = { $regex: `${queryParams.videoEncodingType}`, $options: 'i' };
+    }
+
+    if (queryParams.videoAuthor) {
+        customQuery.videoAuthor = { $regex: `${queryParams.videoAuthor}`, $options: 'i' };
+    }
+
+    if (queryParams.videoKeywords) {
+        customQuery.videoKeywords = { $regex: `${queryParams.videoKeywords}`, $options: 'i' };
+    }
+
+    // as videoData is sub document, add the customQuery to an $elemMatch query to build out final query
+    let query = {
+       videoData : { $elemMatch : customQuery }
+    };
+
+    VIDEO
+    .find(query)
+    .exec((err, video) => {
+        if (!video) {
+            sendJSONResponse(res, 404, {
+                "message" : "No videos found matching those search parameters"
+            });
+            return;
+        } else if (err) {
+            sendJSONResponse(res, 404, err);
+            return;
+        }
+
+        // Check that query does not return empty object
+        if (video && video.length > 0) {
+            sendJSONResponse(res, 200, video); 
+        } else {
+            sendJSONResponse(res, 404, {
+                "message" : "No videos found matching those search parameters"
+            });
+        }   
+    });
+};
+
 // UPDATE Video Record (Create a new version)
 const updateVideoByID = (videoID, newVideo, req, res) => {
     VIDEO
@@ -182,22 +234,9 @@ const updateVideoByID = (videoID, newVideo, req, res) => {
             sendJSONResponse(res, 404, err);
             return;
         } 
-
         
         // Get data from the last version of the document so that the version number can be incremented
         let lastVideo = video.videoData[0];
-
-        // TODO: Handle this is in the front end, as stopping user from deleting locked video will be very difficult if it can be done at all.
-        // Code to be removed
-        // Ensure users can't edit video if file is locked
-        // let fileIsLocked = lastVideo.fileisLocked;
-
-        // if (fileIsLocked) {
-        //     sendJSONResponse(res, 403, {
-        //         "message" : `File is locked for editing by ${lastVideo.fileLockedBy}`
-        //     });
-        //     return;
-        // }
 
         // increment version number manaully, so versions are always logical
         let lastVersionID = parseInt(lastVideo.versionID);
@@ -477,6 +516,7 @@ module.exports = {
     getAllVideoVersionsByID,
     getMostRecentVideoVersion,
     getSpecificVideoVersion,
+    searchVideoRecords,
     updateVideoByID,
     updateFileLockByIDAndVersionNumber,
     deleteVideoByID,

@@ -41,6 +41,36 @@ const getAllVideoRecords = (req, res) => {
 const searchVideoRecords = (req, res) => {
     if (req.query) {
 
+        // capture supplied query params
+        let query = {};
+        
+        // 
+        if (req.query.videoFileName !== undefined) {
+            if (req.query.videoFileName !== '') {
+                query.videoFileName = String(req.query.videoFileName);
+            }
+        }
+
+        if (req.query.videoEncodingType !== undefined) {
+            if (req.query.videoEncodingType !== '') {
+                query.videoEncodingType = String(req.query.videoEncodingType);
+            }
+        }
+
+        if (req.query.videoAuthor !== undefined) {
+            if (req.query.videoAuthor !== '') {
+                query.videoAuthor = String(req.query.videoAuthor);
+            }
+        }
+
+        if (req.query.videoKeywords !== undefined) {
+            if (req.query.videoKeywords !== '') {
+                query.videoKeywords = String(req.query.videoKeywords);
+            }
+        }
+
+        DAL.searchVideoRecords(query, req, res);
+
     } else {
         sendJSONResponse(res, 400, {
             "message" : "Search parameters required for search"
@@ -130,7 +160,7 @@ const updateFileLock = (req, res) => {
         let username = req.body.fileLockedBy;
         
         console.log(req.body);
-        
+
         DAL.updateFileLockByIDAndVersionNumber(videoID, fileLock, username, req, res);
     
     } else {
