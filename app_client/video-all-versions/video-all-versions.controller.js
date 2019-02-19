@@ -14,6 +14,7 @@ angular
         } else {
             videoData.getAllVersions(videoID).then(function (result) {
                 vm.videos = result.data;
+                vm.videoDisplayDate = Date(vm.videos.videoData.videoCreationDate)
                 console.log(vm.videos);
             });
     

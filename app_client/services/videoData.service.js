@@ -57,6 +57,14 @@ angular
             });
         };
 
+        var lockFile = function (videoID, lockData) {            
+            return $http.patch('/api/media/video/' + videoID, lockData, {
+                headers: {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
+        };
+
         // Delete
         var deleteVersion = function (videoID, videoVersion) {
             return $http.delete('/api/media/video/' + videoID + '/version/' + videoVersion, {
@@ -81,6 +89,7 @@ angular
             getAllVersions: getAllVersions,
             getSpecificVersion: getSpecificVersion,            
             updateVideo: updateVideo,
+            lockFile: lockFile,
             deleteVersion: deleteVersion,
             deleteVideo: deleteVideo
         };

@@ -126,19 +126,11 @@ const updateFileLock = (req, res) => {
     if (req.params.videoid && req.body.fileLock) {
         console.log('running update file lock');
         let videoID = req.params.videoid;
-        let videoVersion = req.params.versionnumber;
         let fileLock = JSON.parse(req.body.fileLock);
-        let username = '';
-
-        // TODO: Need to get username from jwt token when auth added
-        if (fileLock === true) {
-             username = 'jason.briggs001@gmail.com';
-        } else {
-             username = '';
-        };
-
-        console.log(`fileLock: ${fileLock}`);
-
+        let username = req.body.fileLockedBy;
+        
+        console.log(req.body);
+        
         DAL.updateFileLockByIDAndVersionNumber(videoID, fileLock, username, req, res);
     
     } else {

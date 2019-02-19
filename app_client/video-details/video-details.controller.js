@@ -17,7 +17,7 @@ angular
                 vm.video = result.data;
                 vm.videoID = videoID;
                 vm.videoVersion = vm.video.videoData[0].versionID;
-
+                vm.videoDisplayDate = Date(vm.video.videoData[0].videoCreationDate);
                 console.log(vm.video);
             });
 

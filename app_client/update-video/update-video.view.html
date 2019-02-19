@@ -3,6 +3,17 @@
 <div>
     <h1>Update Video</h1>
     
+    <div ng-if="vm.fileLock">
+        <div ng-if="vm.username === vm.fileLockUser">
+            <button class="btn btn-dark" ng-click="vm.unlockFile()">Unlock File</button>
+        </div>
+        <label>File is locked for editing by: {{ vm.fileLockUser }}</label>
+    </div>
+
+    <div ng-if="!vm.fileLock">
+        <button class="btn btn-dark" ng-click="vm.lockFile()">Lock File For Editing</button>
+    </div>
+
     <label>* Required Fields</label>
     <div class="container-fluid col-lg-12">
         <form>
@@ -64,7 +75,11 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" ng-click="vm.updateVideo()">Submit</button>
+                        <label for="videoKeywords">Keywords:</label>
+                        <input id="videoKeywords" type="text" placeholder="Keywords" ng-model="vm.video.videoKeywords" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" ng-click="vm.updateVideo()" ng-disabled="vm.fileLock && vm.username !== vm.fileLockUser">Submit</button>
                     </div>
                 </div>
             </div>
