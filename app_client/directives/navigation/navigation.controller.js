@@ -7,7 +7,6 @@ angular
         var vm = this;
 
         vm.logout = function() {
-            console.log('logout clicked')
             authentication.logout();
             $location.path('/login');
         };

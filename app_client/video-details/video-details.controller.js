@@ -70,7 +70,6 @@ angular
             };
 
             vm.updateVersion = function () {
-                console.log('update clicked');
                 $location.path('/media/video/' + videoID + '/update');
             };
 

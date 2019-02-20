@@ -15,14 +15,14 @@ angular
             var emptyVideo = {
                 videoFileName: "",
                 videoLength: "",
-                videoFrameWidth: 0,
-                videoFrameHeight: 0,
+                videoFrameWidth: "",
+                videoFrameHeight: "",
                 videoDataRate: "",
                 videoTotalBitRate: "",
                 videoFrameRate: "",
                 videoEncodingType: "",
                 VideoAudioBitRate: "",
-                videoAudioChannels: 0,
+                videoAudioChannels: "",
                 videoAudioSampleRate: "",
                 videoSize: "",
                 videoKeywords: ""
