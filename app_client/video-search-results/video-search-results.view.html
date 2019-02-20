@@ -1,0 +1,138 @@
+<navigation></navigation>
+
+<div class="container-fluid">
+    <h1>Search Results</h1>
+
+    <div class="row justify-content-center col-md-12" ng-repeat="video in vm.videos">
+        <div class="col-md-12" ng-repeat="vid in video.videoData">
+            <table class="table table-dark table-striped col-md-10">
+                <tbody>
+                    <tr>
+                        <td>
+                            Filename:
+                        </td>
+                        <td>
+                            {{ vid.videoFileName }}
+                            <span class="ml-auto">
+                                <a href="/media/video/{{ video._id }}/version/all">See All Versions</a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Length:
+                        </td>
+                        <td>
+                            {{ vid.videoLength }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Frame Width  
+                        </td>
+                        <td>
+                            {{ vid.videoFrameWidth }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Frame Height  
+                        </td>
+                        <td>
+                            {{ vid.videoFrameHeight }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Data Rate  
+                        </td>
+                        <td>
+                            {{ vid.videoDataRate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Total Bit Rate  
+                        </td>
+                        <td>
+                            {{ vid.videoTotalBitRate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Frame Rate 
+                        </td>
+                        <td>
+                            {{ vid.videoFrameRate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Encoding Type  
+                        </td>
+                        <td>
+                            {{ vid.videoEncodingType }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Audio Bit Rate  
+                        </td>
+                        <td>
+                            {{ vid.videoAudioBitRate }}
+                        </td>
+                    </tr>        
+                    <tr>
+                        <td>
+                            Audio Sample Rate  
+                        </td>
+                        <td>
+                            {{ vid.videoAudioSampleRate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            File Size 
+                        </td>
+                        <td>
+                            {{ vid.videoSize }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            File Version  
+                        </td>
+                        <td>
+                            {{ vid.versionID }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            File Author
+                        </td>
+                        <td>
+                            {{ vid.videoAuthor }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Keywords
+                        </td>
+                        <td>
+                            {{ vid.videoKeywords }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            File Creation Date
+                        </td>
+                        <td>
+                            {{ vid.videoCreationDate | date:'dd/MM/yyyy HH:mm:ss' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+</div>

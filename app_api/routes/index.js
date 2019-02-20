@@ -15,14 +15,17 @@ router.post('/users', userController.addNewUser);
 router.post('/users/login', userController.login);
 
 // Video routes
-router.post('/media/video', videoController.addNewVideo);
-router.get('/media/video', videoController.getAllVideoRecords);
-router.get('/media/video/:videoid', videoController.getAllVideoVersionsByID);
-router.get('/media/video/:videoid/version', videoController.getLatestVideoVersionByID);
-router.get('/media/video/:videoid/version/:versionnumber', videoController.getSpecificVideoVersion);
-router.put('/media/video/:videoid', videoController.updateVideo);
-router.delete('/media/video/:videoid', videoController.deleteVideoByID);
-router.delete('/media/video/:videoid/version/:versionnumber', videoController.deleteSpecificVideoVersion);
+router.post('/media/video', auth, videoController.addNewVideo);
+router.get('/media/video', auth, videoController.getAllVideoRecords);
+router.get('/media/video/search', auth, videoController.searchVideoRecords);
+router.get('/media/video/:videoid', auth, videoController.getAllVideoVersionsByID);
+router.get('/media/video/:videoid/version', auth, videoController.getLatestVideoVersionByID);
+router.get('/media/video/:videoid/version/:versionnumber', auth, videoController.getSpecificVideoVersion);
+router.put('/media/video/:videoid', auth, videoController.updateVideo);
+router.patch('/media/video/:videoid', auth, videoController.updateFileLock);
+router.delete('/media/video/:videoid', auth, videoController.deleteVideoByID);
+router.delete('/media/video/:videoid/version/:versionnumber', auth, videoController.deleteSpecificVideoVersion);
+
 
 // Audio routes
 router.post('/media/audio', audioController.addNewAudio);

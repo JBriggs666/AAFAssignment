@@ -14,10 +14,16 @@ const videoDataSchema = new mongoose.Schema({
     VideoAudioChannels: Number,
     videoAudioSampleRate: String,
     videoEncodingType: String,
-    videoSize: String
+    videoSize: String,
+    videoAuthor: { type: String, require: true },
+    videoCreationDate: { type: Date, required: true, default: Date.now },
+    videoKeywords: { type: String }
 });
 
 const videoSchema = new mongoose.Schema({
+    
+    fileisLocked: {type: Boolean, required: true, default: false},
+    fileLockedBy: { type: String, default: ''},
     videoData: [videoDataSchema]
 });
 
