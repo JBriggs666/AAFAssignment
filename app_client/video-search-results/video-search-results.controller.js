@@ -7,6 +7,8 @@ angular
         var vm = this;
 
         vm.isLoggedIn = authentication.isLoggedIn();
+
+        // used to flag if search yields results or not
         vm.noData = false;
 
         if (!vm.isLoggedIn) {
@@ -23,10 +25,6 @@ angular
                 vm.noData = false;
                 vm.videos = result.data;
             }, function errorCallBack (result) {
-                // return to login page if something went wrong, display response message and reset credentials
-                // $location.path('/login');
-                // vm.formError = response.data.message;
-                // vm.credentials = angular.copy(credentials); 
                 vm.noData = true;  
                 vm.error = result.data.message;
                 console.log("error: " + result.data.message);             

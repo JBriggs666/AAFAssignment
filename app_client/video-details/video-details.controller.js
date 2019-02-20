@@ -19,7 +19,8 @@ angular
             vm.fileLock = "";
             vm.username = authentication.currentUser().email;
 
-            videoData.getVideoDetails(videoID).then(function (result) {
+            videoData.getVideoDetails(videoID)
+            .then(function successCallBack (result) {
                 vm.video = result.data;
                 vm.videoID = videoID;
 
@@ -29,6 +30,8 @@ angular
                 vm.videoVersion = vm.video.videoData[0].versionID;
                 vm.deleteable = vm.videoVersion > 1;
                 vm.videoDisplayDate = Date(vm.video.videoData[0].videoCreationDate);
+            }, function errorCallBack (result) {
+                $location.path('/404');
             });
             
             vm.getSpecificVersion = function () {
@@ -43,8 +46,11 @@ angular
                     fileLockedBy: vm.username
                 };
 
-                videoData.lockFile(videoID, lockData).then(function (result) {
+                videoData.lockFile(videoID, lockData)
+                .then(function successCallBack (result) {
                     $route.reload();
+                }, function errorCallBack (result) {
+                    $location.path('/404');
                 });
             };
 
@@ -55,8 +61,11 @@ angular
                     fileLockedBy: ''
                 };
 
-                videoData.lockFile(videoID, lockData).then(function (result) {
+                videoData.lockFile(videoID, lockData)
+                .then(function successCallBack (result) {
                     $route.reload();
+                }, function errorCallBack (result) {
+                    $location.path('/404');
                 });
             };
 
@@ -67,8 +76,11 @@ angular
 
             vm.deleteVersion = function () {
                 if (confirm('Are you sure you want to delete?  This process is irreversible')) {
-                    videoData.deleteVersion(videoID, vm.videoVersion).then(function () {
+                    videoData.deleteVersion(videoID, vm.videoVersion)
+                    .then(function successCallBack (result) {
                         $location.path('/');
+                    }, function errorCallBack (result) {
+                        $location.path('/404');
                     });
                 }
             };

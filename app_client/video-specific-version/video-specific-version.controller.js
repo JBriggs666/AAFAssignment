@@ -15,15 +15,18 @@ angular
             $location.path('/login');
         } else {
 
-            videoData.getSpecificVersion(videoID, videoVersion).then(function (result) {
-                console.log(result.data);
+            videoData.getSpecificVersion(videoID, videoVersion)
+            .then(function successCallBack (result) {
                 vm.video = result.data;
                 vm.videoID = videoID;
+            }, function errorCallBack (result) {
+                $location.path('/404');
             });
 
             vm.getSpecificVersion = function () {
-                vm.specificVersion;
-                $location.path('/media/video/' + videoID + '/version/' + vm.specificVersion);
+                var version = vm.specificVersion;
+                vm.specificVersion = "";
+                $location.path('/media/video/' + videoID + '/version/' + version);
             };
         }        
     };

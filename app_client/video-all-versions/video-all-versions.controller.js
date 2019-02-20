@@ -17,14 +17,14 @@ angular
             vm.fileLock = "";
             vm.username = authentication.currentUser().email;
 
-            videoData.getAllVersions(videoID).then(function (result) {
+            videoData.getAllVersions(videoID)
+            .then(function successCallBack (result) {
                 vm.videos = result.data;
-                vm.videoDisplayDate = Date(vm.videos.videoData.videoCreationDate)
                 
                 vm.fileLock = vm.videos.fileisLocked;
                 vm.fileLockUser = vm.videos.fileLockedBy;
-
-                console.log(vm.videos);
+            }, function errorCallBack (result) {
+                $location.path('/404');
             });
     
             vm.lockFile = function () {
@@ -34,8 +34,11 @@ angular
                     fileLockedBy: vm.username
                 };
 
-                videoData.lockFile(videoID, lockData).then(function (result) {
+                videoData.lockFile(videoID, lockData)
+                .then(function successCallBack (result) {
                     $route.reload();
+                }, function errorCallBack (result) {
+                    $location.path('/404');
                 });
             };
 
@@ -46,15 +49,21 @@ angular
                     fileLockedBy: ''
                 };
 
-                videoData.lockFile(videoID, lockData).then(function (result) {
+                videoData.lockFile(videoID, lockData)
+                .then(function successCallBack (result) {
                     $route.reload();
+                }, function errorCallBack (result) {
+                    $location.path('/404');
                 });
             };
 
             vm.deleteVideo = function () {
                 if (confirm('Are you sure you want to delete?  This process is irreversible')) {
-                    videoData.deleteVideo(videoID).then(function () {
+                    videoData.deleteVideo(videoID)
+                    .then(function successCallBack (result) {
                         $location.path('/');
+                    }, function errorCallBack (result) {
+                        $location.path('/404');
                     });
                 }
             };
