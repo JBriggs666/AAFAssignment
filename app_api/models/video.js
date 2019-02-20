@@ -27,4 +27,5 @@ const videoSchema = new mongoose.Schema({
     videoData: [videoDataSchema]
 });
 
+// exported like this for unit testing to work
 module.exports = VIDEO = mongoose.model('video', videoSchema);
