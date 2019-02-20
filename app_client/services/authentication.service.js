@@ -41,7 +41,7 @@ angular
         var currentUser = function () {
             if (isLoggedIn()) {
                 var token = getToken();
-                // decode JWT and return user details fro web app to use
+                // decode JWT and return user details from web app to use
                 var payload = JSON.parse($window.atob(token.split('.')[1]));
                 return {
                     id : payload._id,
