@@ -8,6 +8,9 @@ angular
 
         vm.isLoggedIn = authentication.isLoggedIn();
 
+        // used to flag if search yields results or not
+        vm.noData = false;
+
         if (!vm.isLoggedIn) {
             // return user to login screen if they are not logged in
             $location.path('/login');
@@ -17,8 +20,14 @@ angular
             // button, the search results will still be displayed            
             var query = $window.location.search;
 
-            videoData.videoSearch(query).then(function (result) {
+            videoData.videoSearch(query)
+            .then(function successCallBack (result) {
+                vm.noData = false;
                 vm.videos = result.data;
+            }, function errorCallBack (result) {
+                vm.noData = true;  
+                vm.error = result.data.message;
+                console.log("error: " + result.data.message);             
             });
         }
     };

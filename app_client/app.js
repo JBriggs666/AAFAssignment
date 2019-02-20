@@ -47,6 +47,11 @@ function config ($routeProvider, $locationProvider) {
             controller: 'videoSearchResultsCtrl',
             controllerAs: 'vm'
         })
+        .when('/404', {
+            templateUrl: 'error/error.view.html',
+            controller: 'errorCtrl',
+            controllerAs: 'vm'
+        })
         .otherwise({
             templateUrl: 'error/error.view.html',
             controller: 'errorCtrl',

@@ -11,7 +11,7 @@ const videoDataSchema = new mongoose.Schema({
     videoTotalBitRate: String,
     videoFrameRate: String,
     videoAudioBitRate: String,
-    VideoAudioChannels: Number,
+    videoAudioChannels: Number,
     videoAudioSampleRate: String,
     videoEncodingType: String,
     videoSize: String,

@@ -17,7 +17,7 @@ const addNewVideo = (req, res) => {
             videoTotalBitRate: req.body.videoTotalBitRate,
             videoFrameRate: req.body.videoFrameRate,
             videoAudioBitRate: req.body.videoAudioBitRate,
-            VideoAudioChannels: req.body.VideoAudioChannels,
+            videoAudioChannels: req.body.videoAudioChannels,
             videoAudioSampleRate: req.body.videoAudioSampleRate,
             videoEncodingType: req.body.videoEncodingType,
             videoSize: req.body.videoSize     ,

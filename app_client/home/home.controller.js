@@ -11,10 +11,13 @@ angular
             // return user to login screen if they are not logged in
             $location.path('/login');
         } else {
-            
-            videoData.getAllVideos().then(function (result) {
+
+            videoData.getAllVideos()
+            .then(function successCallBack (result) {
                 vm.videos = result.data;
                 vm.noOfVideos = vm.videos.length;
+            }, function errorCallBack (result) {
+                $location.path('/404');
             }); 
         }
     };

@@ -2,7 +2,7 @@ angular
     .module('aafapp')
     .controller('videoSearchCtrl', videoSearchCtrl);
 
-    function videoSearchCtrl(videoData, authentication, $location) {
+    function videoSearchCtrl(authentication, $location) {
 
         var vm = this;
 

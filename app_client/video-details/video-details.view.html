@@ -19,11 +19,11 @@
     </div>
     
     <div class="row col-md-11 justify-content-end">
-        <form class="form-inline">
+        <form class="form-inline" ng-submit="vm.getSpecificVersion()">
             <div class="form-group">
                 <label for="specificVersion">View Version:</label>
                 <input id="specificVersion" ng-model="vm.specificVersion" type="number" class="form-control">
-                <button class="btn btn-dark" ng-click="vm.getSpecificVersion()" type="submit">Go</button>
+                <button class="btn btn-dark" type="submit">Go</button>
             </div>
         </form>
     </div>
@@ -102,7 +102,15 @@
                 <td>
                     {{ vm.video.videoData[0].videoAudioBitRate }}
                 </td>
-            </tr>        
+            </tr>  
+            <tr>
+                <td>
+                    Audio Channels
+                </td>
+                <td>
+                    {{ vm.video.videoData[0].videoAudioChannels }}
+                </td>
+            </tr>      
             <tr>
                 <td>
                     Audio Sample Rate  
@@ -148,7 +156,7 @@
                     File Creation Date
                 </td>
                 <td>
-                    {{ vm.videoCreationDate | date:'dd/MM/yyyy HH:mm:ss' }}
+                    {{ vm.video.videoData[0].videoCreationDate | date:'dd/MM/yyyy HH:mm:ss' }}
                 </td>
             </tr>
         </tbody>

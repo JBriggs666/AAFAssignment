@@ -30,9 +30,13 @@ angular
 
                 if (vm.video.videoFileName) {
 
-                    videoData.updateVideo(videoID, vm.video).then(function (result) {
+                    videoData.updateVideo(videoID, vm.video)
+                    .then(function successCallBack (result) {
                         $location.path('/media/video/' + result.data._id + '/version');
+                    }, function errorCallBack (result) {
+                        $location.path('/404');
                     });
+                    
                 } else {
                     vm.formError = "Please enter all required fields";
                 } 
@@ -45,8 +49,11 @@ angular
                     fileLockedBy: vm.username
                 };
 
-                videoData.lockFile(videoID, lockData).then(function (result) {
+                videoData.lockFile(videoID, lockData)
+                .then(function successCallBack (result) {
                     $route.reload();
+                }, function errorCallBack (result) {
+                    $location.path('/404');
                 });
             };
 
@@ -57,8 +64,11 @@ angular
                     fileLockedBy: ''
                 };
 
-                videoData.lockFile(videoID, lockData).then(function (result) {
+                videoData.lockFile(videoID, lockData)
+                .then(function successCallBack (result) {
                     $route.reload();
+                }, function errorCallBack (result) {
+                    $location.path('/404');
                 });
             };
         }
