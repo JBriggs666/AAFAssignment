@@ -1,9 +1,7 @@
 angular
     .module('aafapp')
     .service('authentication', authentication);
-
-    authentication.inject = ['$http', '$window'];
-
+    
     function authentication ($http, $window) {
 
         var saveToken = function (token) {

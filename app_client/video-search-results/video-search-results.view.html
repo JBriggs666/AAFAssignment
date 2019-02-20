@@ -1,22 +1,10 @@
 <navigation></navigation>
 
 <div class="container-fluid">
-        <h1>Video Specific Version: {{ vm.video.videoData[0].versionID }}</h1>
-    
-        <a href="/media/video/{{vm.videoID}}/version/all">View all versions</a>
-    
-        
-        <div class="row col-md-11 justify-content-end">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="specificVersion">View Version:</label>
-                    <input id="specificVersion" ng-model="vm.specificVersion" type="number" class="form-control">
-                    <button class="btn btn-dark" ng-click="vm.getSpecificVersion()" type="submit">Go</button>
-                </div>
-            </form>
-        </div>
-    
-        <div class="row col-md-12 justify-content-center">
+    <h1>Search Results</h1>
+
+    <div class="row justify-content-center col-md-12" ng-repeat="video in vm.videos">
+        <div class="col-md-12" ng-repeat="vid in video.videoData">
             <table class="table table-dark table-striped col-md-10">
                 <tbody>
                     <tr>
@@ -24,7 +12,10 @@
                             Filename:
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoFileName }}
+                            {{ vid.videoFileName }}
+                            <span class="ml-auto">
+                                <a href="/media/video/{{ video._id }}/version/all">See All Versions</a>
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -32,7 +23,7 @@
                             Length:
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoLength }}
+                            {{ vid.videoLength }}
                         </td>
                     </tr>
                     <tr>
@@ -40,7 +31,7 @@
                             Frame Width  
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoFrameWidth }}
+                            {{ vid.videoFrameWidth }}
                         </td>
                     </tr>
                     <tr>
@@ -48,7 +39,7 @@
                             Frame Height  
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoFrameHeight }}
+                            {{ vid.videoFrameHeight }}
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +47,7 @@
                             Data Rate  
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoDataRate }}
+                            {{ vid.videoDataRate }}
                         </td>
                     </tr>
                     <tr>
@@ -64,7 +55,7 @@
                             Total Bit Rate  
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoTotalBitRate }}
+                            {{ vid.videoTotalBitRate }}
                         </td>
                     </tr>
                     <tr>
@@ -72,7 +63,7 @@
                             Frame Rate 
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoFrameRate }}
+                            {{ vid.videoFrameRate }}
                         </td>
                     </tr>
                     <tr>
@@ -80,7 +71,7 @@
                             Encoding Type  
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoEncodingType }}
+                            {{ vid.videoEncodingType }}
                         </td>
                     </tr>
                     <tr>
@@ -88,7 +79,7 @@
                             Audio Bit Rate  
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoAudioBitRate }}
+                            {{ vid.videoAudioBitRate }}
                         </td>
                     </tr>        
                     <tr>
@@ -96,7 +87,7 @@
                             Audio Sample Rate  
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoAudioSampleRate }}
+                            {{ vid.videoAudioSampleRate }}
                         </td>
                     </tr>
                     <tr>
@@ -104,7 +95,7 @@
                             File Size 
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoSize }}
+                            {{ vid.videoSize }}
                         </td>
                     </tr>
                     <tr>
@@ -112,7 +103,7 @@
                             File Version  
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].versionID }}
+                            {{ vid.versionID }}
                         </td>
                     </tr>
                     <tr>
@@ -120,7 +111,7 @@
                             File Author
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoAuthor }}
+                            {{ vid.videoAuthor }}
                         </td>
                     </tr>
                     <tr>
@@ -128,7 +119,7 @@
                             Keywords
                         </td>
                         <td>
-                            {{ vm.video.videoData[0].videoKeywords }}
+                            {{ vid.videoKeywords }}
                         </td>
                     </tr>
                     <tr>
@@ -136,10 +127,12 @@
                             File Creation Date
                         </td>
                         <td>
-                                {{ vm.videoCreationDate | date:'dd/MM/yyyy HH:mm:ss' }}
+                            {{ vid.videoCreationDate | date:'dd/MM/yyyy HH:mm:ss' }}
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    </div>
+        </div>
+
+</div>

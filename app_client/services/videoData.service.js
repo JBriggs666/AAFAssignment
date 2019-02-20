@@ -1,8 +1,6 @@
 angular
     .module('aafapp')
-    .service('videoData', videoData);
-
-    videoData.$inject = ['$http', 'authentication'];
+    .service('videoData', videoData);  
 
     function videoData ($http, authentication) {
 
@@ -48,6 +46,14 @@ angular
             });
         }
 
+        var videoSearch = function(searchParams) {
+            return $http.get('/api/media/video/search' + searchParams, {
+                headers : {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
+        };
+
         // Update 
         var updateVideo = function (videoID, videoData) {
             return $http.put('/api/media/video/' + videoID, videoData, {
@@ -87,7 +93,8 @@ angular
             getAllVideos: getAllVideos,
             getVideoDetails: getVideoDetails,
             getAllVersions: getAllVersions,
-            getSpecificVersion: getSpecificVersion,            
+            getSpecificVersion: getSpecificVersion,  
+            videoSearch: videoSearch,          
             updateVideo: updateVideo,
             lockFile: lockFile,
             deleteVersion: deleteVersion,

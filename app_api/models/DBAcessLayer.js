@@ -195,8 +195,10 @@ const searchVideoRecords = (queryParams, req, res) => {
        videoData : { $elemMatch : customQuery }
     };
 
+    // find all matching videos, but only return latest versions
     VIDEO
     .find(query)
+    .slice('videoData', -1)
     .exec((err, video) => {
         if (!video) {
             sendJSONResponse(res, 404, {
