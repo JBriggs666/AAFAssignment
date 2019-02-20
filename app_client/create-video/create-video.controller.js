@@ -24,7 +24,8 @@ angular
                 VideoAudioBitRate: "",
                 videoAudioChannels: 0,
                 videoAudioSampleRate: "",
-                videoSize: ""
+                videoSize: "",
+                videoKeywords: ""
             };
 
             vm.video = angular.copy(emptyVideo);
@@ -33,13 +34,23 @@ angular
                 vm.formError = "";
 
                 if (vm.video.videoFileName) {
+                    vm.video.videoAuthor = authentication.currentUser().email;
+
                     videoData.addVideo(vm.video)
-                        .then(function (result) {
-                            $location.path('/media/video/' + result.data._id + '/version');
-                        });
+                    .then(function successCallBack (result) {
+                        $location.path('/media/video/' + result.data._id + '/version');
+                    }, function errorCallBack (result) {
+                        $location.path('/404');           
+                    });
+
                 } else {
                     vm.formError = "Please enter all required fields";
                 }
+            };
+
+            vm.resetForm = function () {
+                vm.formError = "";
+                vm.video = angular.copy(emptyVideo);
             };
         }
     };

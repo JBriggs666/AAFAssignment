@@ -62,10 +62,17 @@
                         <input id="videoSize" type="text" placeholder="File Size" ng-model="vm.video.videoSize" class="form-control">
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="videoKeywords">Keywords</label>
+                        <input id="videoKeywords" type="text" placeholder="Keywords" ng-model="vm.video.videoKeywords" class="form-control">
+                    </div>
+                </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary" ng-click="vm.addVideo()">Submit</button>
+                    <button class="btn btn-warning" ng-click="vm.resetForm()">Reset Form</button>
                 </div>
             </div>
         </form>        

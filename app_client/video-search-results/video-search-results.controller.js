@@ -20,12 +20,15 @@ angular
 
             videoData.videoSearch(query)
             .then(function successCallBack (result) {
+                vm.noData = false;
                 vm.videos = result.data;
             }, function errorCallBack (result) {
                 // return to login page if something went wrong, display response message and reset credentials
                 // $location.path('/login');
                 // vm.formError = response.data.message;
-                // vm.credentials = angular.copy(credentials);   
+                // vm.credentials = angular.copy(credentials); 
+                vm.noData = true;  
+                vm.error = result.data.message;
                 console.log("error: " + result.data.message);             
             });
         }
