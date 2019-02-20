@@ -15,7 +15,7 @@ const videoDataSchema = new mongoose.Schema({
     videoAudioSampleRate: String,
     videoEncodingType: String,
     videoSize: String,
-    videoAuthor: { type: String, require: true },
+    videoAuthor: { type: String, required: true },
     videoCreationDate: { type: Date, required: true, default: Date.now },
     videoKeywords: { type: String }
 });
@@ -27,4 +27,4 @@ const videoSchema = new mongoose.Schema({
     videoData: [videoDataSchema]
 });
 
-mongoose.model('video', videoSchema);
+module.exports = VIDEO = mongoose.model('video', videoSchema);
