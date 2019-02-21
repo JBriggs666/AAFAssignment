@@ -1,0 +1,8 @@
+body {
+    font-size: 12pt;
+    font-family: 'book antiqua', palatino, serif; 
+}
+
+.darkBackground a { color: white; text-decoration: underline; } 
+.darkBackground a:hover { color: gray };
+
